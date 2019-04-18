@@ -14,7 +14,6 @@ with open('site.csv', 'wb') as spreadsheet:
     for line in file:
         link = line[10:-13]
         links.append(link)
-        print(link)
 
     links[-1] = links[-1][:-8]
     print(links[-1])
@@ -33,5 +32,7 @@ with open('site.csv', 'wb') as spreadsheet:
         data = data.encode('utf-8')
         req = Request(service_url, data)
         content = urlopen(req).read()
-        print(content)
+        content = content.decode('utf-8')
+        message = json.dumps(content)
+        print(message)
         time.sleep(2)
