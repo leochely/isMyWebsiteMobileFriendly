@@ -16,7 +16,6 @@ with open('site.csv', 'wb') as spreadsheet:
         links.append(link)
 
     links[-1] = links[-1][:-8]
-    print(links[-1])
 
     api_key = 'AIzaSyCZcMS8DoTtOP6Nvu_6C3T9pkpHhCs5oeI'
 
@@ -33,6 +32,7 @@ with open('site.csv', 'wb') as spreadsheet:
         req = Request(service_url, data)
         content = urlopen(req).read()
         content = content.decode('utf-8')
-        message = json.dumps(content)
-        print(message)
-        time.sleep(2)
+        content = json.dumps(content)
+        content = json.loads(content)
+        print(content)
+        time.sleep(5)
