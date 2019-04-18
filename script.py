@@ -3,11 +3,11 @@ from urllib.request import urlopen, Request
 from urllib.parse import urlencode, quote_plus
 import time
 import csv
-import json
+import ast
 
 links = []
-with open('site.csv', 'wb') as spreadsheet:
-    writer = csv.writer(spreadsheet)
+with open('site.csv', 'w') as spreadsheet:
+    writer = csv.writer(spreadsheet,delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
     file = open('sitemap.xml')
     file.readline();
 
@@ -21,7 +21,9 @@ with open('site.csv', 'wb') as spreadsheet:
 
     service_url = "https://searchconsole.googleapis.com/v1/urlTestingTools/mobileFriendlyTest:run"
 
+    writer.writerow(['url','is mobile friendly', 'errors'])
     for link in links:
+        time.sleep(5)
         request_url = link
         params = {
             'url': request_url,
@@ -31,8 +33,5 @@ with open('site.csv', 'wb') as spreadsheet:
         data = data.encode('utf-8')
         req = Request(service_url, data)
         content = urlopen(req).read()
-        content = content.decode('utf-8')
-        content = json.dumps(content)
-        content = json.loads(content)
+        content = ast.literal_eval(content.decode('utf-8'))
         print(content)
-        time.sleep(5)
