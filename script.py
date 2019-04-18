@@ -23,6 +23,7 @@ with open('site.csv', 'w') as spreadsheet:
 
     writer.writerow(['url','is mobile friendly', 'errors'])
     for link in links:
+        sheetLine = [link]
         time.sleep(5)
         request_url = link
         params = {
@@ -34,4 +35,14 @@ with open('site.csv', 'w') as spreadsheet:
         req = Request(service_url, data)
         content = urlopen(req).read()
         content = ast.literal_eval(content.decode('utf-8'))
+
+        if(content["mobileFriendliness"] == 'NOT_MOBILE_FRIENDLY'):
+            sheetLine.append('N')
+            errors = ""
+            for error in content["mobileFriendlyIssues"]:
+                errors += error['rule'] + " /"
+            sheetLine.append(errors)
+        else:
+            sheetLine.append('Y')
+        writer.writerow(sheetLine)
         print(content)
