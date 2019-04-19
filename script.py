@@ -17,7 +17,7 @@ with open('site.csv', 'w') as spreadsheet:
 
     links[-1] = links[-1][:-8]
 
-    api_key = 'AIzaSyCZcMS8DoTtOP6Nvu_6C3T9pkpHhCs5oeI'
+    api_key = '{YOUR_KEY}'
 
     service_url = "https://searchconsole.googleapis.com/v1/urlTestingTools/mobileFriendlyTest:run"
 
